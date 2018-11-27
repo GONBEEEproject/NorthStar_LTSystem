@@ -12,41 +12,44 @@ namespace GON.TelloControll
         private int port = 8889;
         private UdpClient client;
 
-        private void Initialize()
+        public void Initialize()
         {
-            client = new UdpClient();
+            if (client == null)
+            {
+                client = new UdpClient();
+            }
             client.Connect(host, port);
         }
 
-        private void Connect()
+        public void Connect()
         {
             byte[] dgram = Encoding.UTF8.GetBytes("command");
             client.Send(dgram, dgram.Length);
             Debug.Log("entry SDK mode");
         }
 
-        private void Takeoff()
+        public void Takeoff()
         {
             byte[] dgram = Encoding.UTF8.GetBytes("takeoff");
             client.Send(dgram, dgram.Length);
             Debug.Log("Tello auto takeoff");
         }
 
-        private void Land()
+        public void Land()
         {
             byte[] dgram = Encoding.UTF8.GetBytes("land");
             client.Send(dgram, dgram.Length);
             Debug.Log("Tello auto land");
         }
 
-        private void Emergency()
+        public void Emergency()
         {
             byte[] dgram = Encoding.UTF8.GetBytes("emergency");
             client.Send(dgram, dgram.Length);
             Debug.Log("Stop all motors immediately");
         }
 
-        private void SetSpeed(int speed)
+        public void SetSpeed(int speed)
         {
             if (speed < 10)
             {
@@ -62,7 +65,7 @@ namespace GON.TelloControll
             Debug.Log("set speed to x cm/s");
         }
 
-        private void Forward(int move)
+        public void Forward(int move)
         {
             if (move <= -100)
             {
@@ -78,7 +81,7 @@ namespace GON.TelloControll
             Debug.Log("move foward");
         }
 
-        private void Right(int move)
+        public void Right(int move)
         {
             if (move <= -100)
             {
@@ -94,7 +97,7 @@ namespace GON.TelloControll
             Debug.Log("right");
         }
 
-        private void Down(int move)
+        public void Down(int move)
         {
             if (move <= -100)
             {

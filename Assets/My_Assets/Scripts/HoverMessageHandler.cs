@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GON.TelloControll;
 
 public class HoverMessageHandler : MonoBehaviour {
+
+    public Controller controller = new Controller();
 
     #region SlideControll
 
@@ -35,8 +38,25 @@ public class HoverMessageHandler : MonoBehaviour {
 
     #region DroneControll
 
+    public void Initialize()
+    {
+        controller.Initialize();
+    }
 
+    public void Connect()
+    {
+        controller.Connect();
+    }
 
+    public void Takeoff()
+    {
+        controller.Takeoff();
+    }
+
+    public void Land()
+    {
+        controller.Land();
+    }
 
     #endregion
 }
