@@ -1,9 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.IO;
 using GON.TelloControll;
+using Hover.Core.Items.Types;
 
 public class HoverMessageHandler : MonoBehaviour {
+
+    [SerializeField]
+    private string PicPath;
+
+    [SerializeField]
+    private RawImage DisplayPanel, NorthStarPanel;
+
+    private int SlideNum = 0;
+    private List<Texture2D> Slides;
 
     public Controller controller = new Controller();
 
@@ -11,27 +23,60 @@ public class HoverMessageHandler : MonoBehaviour {
 
     public void LoadSlide()
     {
-
+        LoadPic();
     }
 
     public void Activate()
     {
+        DisplayPanel.texture = Slides[SlideNum];
+        NorthStarPanel.texture = Slides[SlideNum];
 
+        DisplayPanel.enabled = true;
+        NorthStarPanel.enabled = true;
     }
 
     public void Inactivate()
     {
-
+        DisplayPanel.enabled = false;
+        NorthStarPanel.enabled = false;
     }
 
     public void Next()
     {
-
+        SlideNum++;
+        if (SlideNum > Slides.Count)
+        {
+            SlideNum = 0;
+        }
+        Activate();
     }
 
     public void Previous()
     {
+        SlideNum--;
+        if (SlideNum <= 0)
+        {
+            SlideNum = Slides.Count;
+        }
+        Activate();
+    }
 
+    public void OnSliderRelease(IItemDataSelectable data)
+    {
+        
+        //SlideNum = (int)Mathf.Round(data.Value);
+
+        if (SlideNum > Slides.Count)
+        {
+            SlideNum = Slides.Count;
+        }
+
+        if (SlideNum <= 0)
+        {
+            SlideNum = 0;
+        }
+
+        Activate();
     }
 
     #endregion
@@ -59,4 +104,31 @@ public class HoverMessageHandler : MonoBehaviour {
     }
 
     #endregion
+
+    public void LoadPic()
+    {
+        Slides = new List<Texture2D>();
+
+        string PictureDirectory = Application.streamingAssetsPath + "/" + PicPath;
+
+        foreach (string path in Directory.GetFiles(PictureDirectory, ".png"))
+        {
+            string Newpath = path;
+            Newpath = path.Replace("\\", "/");
+
+            StartCoroutine(WWWPictureLoad(Newpath));
+        }
+    }
+
+    public IEnumerator WWWPictureLoad(string path)
+    {
+        Texture2D texture;
+        using(WWW www=new WWW("file:///" + path))
+        {
+            yield return www;
+
+            texture = www.textureNonReadable;
+        }
+        Slides.Add(texture);
+    }
 }
