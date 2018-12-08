@@ -15,6 +15,7 @@ public class HoverMessageHandler : MonoBehaviour {
     private RawImage DisplayPanel, NorthStarPanel;
 
     private int SlideNum = 0;
+    [SerializeField]
     private List<Texture2D> Slides;
 
     public Controller controller = new Controller();
@@ -26,6 +27,7 @@ public class HoverMessageHandler : MonoBehaviour {
         LoadPic();
     }
 
+    [ContextMenu("Activate")]
     public void Activate()
     {
         DisplayPanel.texture = Slides[SlideNum];
@@ -35,12 +37,14 @@ public class HoverMessageHandler : MonoBehaviour {
         NorthStarPanel.enabled = true;
     }
 
+    [ContextMenu("Inactivate")]
     public void Inactivate()
     {
         DisplayPanel.enabled = false;
-        NorthStarPanel.enabled = false;
+       //NorthStarPanel.enabled = false;
     }
 
+    [ContextMenu("Next")]
     public void Next()
     {
         SlideNum++;
@@ -51,10 +55,11 @@ public class HoverMessageHandler : MonoBehaviour {
         Activate();
     }
 
+    [ContextMenu("Previous")]
     public void Previous()
     {
         SlideNum--;
-        if (SlideNum <= 0)
+        if (SlideNum < 0)
         {
             SlideNum = Slides.Count;
         }
@@ -105,6 +110,7 @@ public class HoverMessageHandler : MonoBehaviour {
 
     #endregion
 
+    [ContextMenu("LoadPic")]
     public void LoadPic()
     {
         Slides = new List<Texture2D>();
