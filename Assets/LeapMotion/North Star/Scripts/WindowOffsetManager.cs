@@ -56,7 +56,7 @@ namespace Leap.Unity.AR {
         yield return new WaitForSeconds(2f);
       }
 
-      SetPosition(xShift, 0, 2880, 1600);
+      SetPosition(xShift, 0, 1080*2,1920);
       if (robustFullScreen) {
         yield return new WaitForSeconds(1f);
         Screen.fullScreen = true;

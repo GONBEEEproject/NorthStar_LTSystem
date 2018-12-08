@@ -40,7 +40,7 @@ namespace Leap.Unity.AR {
     // Send a game view to a given screen.
     static void SendViewToScreen(EditorWindow view) {
       const int UNITY_MENU_HEIGHT = 22;
-      var size = new Vector2(2880, 1600 + UNITY_MENU_HEIGHT);
+      var size = new Vector2(1080*2,1920 + UNITY_MENU_HEIGHT);
 
       view.minSize = view.maxSize = size;
       Vector2 position = WindowOffsetManager.WindowShift
