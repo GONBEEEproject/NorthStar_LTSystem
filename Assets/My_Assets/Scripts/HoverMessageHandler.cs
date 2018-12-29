@@ -48,7 +48,7 @@ public class HoverMessageHandler : MonoBehaviour {
     public void Next()
     {
         SlideNum++;
-        if (SlideNum > Slides.Count)
+        if (SlideNum >= Slides.Count)
         {
             SlideNum = 0;
         }
@@ -61,7 +61,7 @@ public class HoverMessageHandler : MonoBehaviour {
         SlideNum--;
         if (SlideNum < 0)
         {
-            SlideNum = Slides.Count;
+            SlideNum = Slides.Count-1;
         }
         Activate();
     }
